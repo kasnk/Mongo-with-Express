@@ -29,14 +29,14 @@ let chat1= new Chat({
 });
 
 chat1.save().then((res)=>{
-    console.log(res);
+   // console.log(res);
 });
 
 
 //Index Route
 app.get("/chats",async(req,res)=>{
     let chats=await Chat.find();
-    console.log(chats);
+   // console.log(chats);
     res.render("index.ejs",{chats});
 })
 
@@ -76,7 +76,7 @@ app.get("/chats/:id/edit",async(req,res)=>{
 app.put("/chats/:id",async(req,res)=>{
     let {id}=req.params;
     let {msg: newMsg}=req.body;
-    console.log(newMsg);   
+    //console.log(newMsg);   
     let updatedChat=await Chat.findByIdAndUpdate(
         id,
         {msg:newMsg},
@@ -85,6 +85,18 @@ app.put("/chats/:id",async(req,res)=>{
    // console.log(updatedChat);
     res.redirect("/chats");
 });
+
+//Destroy Route
+app.delete("/chats/:id",async(req,res)=>{
+    let {id}=req.params;
+    let chatDelete=await Chat.findByIdAndDelete(id);
+    console.log(chatDelete);
+    res.redirect("/chats");
+
+})
+
+
+
 
 app.get("/",(req,res)=>{
     res.send("Working!!");
